@@ -17,7 +17,7 @@ export type ChessStrategy = {
   displayName: StrategyName
 }
 
-export type MoveRequest = {
+export type StrategyRequest = {
   fen_string: string
   strategy_name: StrategyIdentifier
 }
@@ -42,7 +42,7 @@ export type GameOutcome = {
   ended: boolean
 }
 
-export type ChessMove =
+export type MoveOutcome =
   | {
       from_square: string
       to_square: string
@@ -53,7 +53,7 @@ export type ChessMove =
     }
 
 export const isChessMove = (
-  data: ChessMove
+  data: MoveOutcome
 ): data is {
   from_square: string
   to_square: string
@@ -68,7 +68,7 @@ export const isChessMove = (
   ).from_square !== null
 
 export const isGameOutcome = (
-  data: ChessMove
+  data: MoveOutcome
 ): data is {
   game_outcome: GameOutcome
 } => (data as { game_outcome: GameOutcome }).game_outcome !== null

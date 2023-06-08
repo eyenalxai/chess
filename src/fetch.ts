@@ -1,4 +1,4 @@
-import { ChessMove, ChessStrategy, MoveRequest } from "@/type"
+import { ChessStrategy, MoveOutcome, StrategyRequest } from "@/type"
 
 export const fetchMove = async ({
   fen,
@@ -6,7 +6,7 @@ export const fetchMove = async ({
 }: {
   fen: string
   strategy: ChessStrategy
-}): Promise<ChessMove> => {
+}): Promise<MoveOutcome> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chess`, {
     method: "POST",
     headers: {
@@ -15,7 +15,7 @@ export const fetchMove = async ({
     body: JSON.stringify({
       fen_string: fen,
       strategy_name: strategy.id
-    } as MoveRequest)
+    } as StrategyRequest)
   })
 
   if (!response.ok) {
