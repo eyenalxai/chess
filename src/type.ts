@@ -36,6 +36,12 @@ export type Reason =
   | "variant_loss"
   | "variant_draw"
 
+export type ChessMove = {
+  from_square: string
+  to_square: string
+  promotion?: string
+}
+
 export type GameOutcome = {
   winner: Winner
   reason: Reason
@@ -44,9 +50,7 @@ export type GameOutcome = {
 
 export type MoveOutcome =
   | {
-      from_square: string
-      to_square: string
-      promotion?: string
+      chess_move: ChessMove
     }
   | {
       game_outcome: GameOutcome
@@ -55,17 +59,13 @@ export type MoveOutcome =
 export const isChessMove = (
   data: MoveOutcome
 ): data is {
-  from_square: string
-  to_square: string
-  promotion?: string
+  chess_move: ChessMove
 } =>
   (
     data as {
-      from_square: string
-      to_square: string
-      promotion?: string
+      chess_move: ChessMove
     }
-  ).from_square !== null
+  ).chess_move !== null
 
 export const isGameOutcome = (
   data: MoveOutcome

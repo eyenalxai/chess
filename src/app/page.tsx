@@ -30,9 +30,9 @@ export default function Home() {
       if (isChessMove(data)) {
         const chess = new Chess(variables.fen)
         chess.move({
-          from: data.from_square,
-          to: data.to_square,
-          promotion: data.promotion
+          from: data.chess_move.from_square,
+          to: data.chess_move.to_square,
+          promotion: data.chess_move.promotion
         })
         setChessboard(new Chess(chess.fen()))
       }
