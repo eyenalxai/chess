@@ -1,6 +1,9 @@
 export type StrategyMap = {
   random: "RANDOM"
   pacifist: "PACIFIST"
+  predator: "PREDATOR"
+  kamikaze: "KAMIKAZE"
+  pawnstorm: "PAWNSTORM"
   "stockfish-100": "STOCKFISH 100"
   "stockfish-500": "STOCKFISH 500"
   "stockfish-1000": "STOCKFISH 1000"
