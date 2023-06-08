@@ -49,7 +49,7 @@ export const useChessGame = () => {
     }, delay)
 
     return () => clearTimeout(timer)
-  }, [chessboard, moveFunction, isAutoMode])
+  }, [chessboard, moveFunction, isAutoMode, whiteStrategy, blackStrategy])
 
   return {
     chessboard,
