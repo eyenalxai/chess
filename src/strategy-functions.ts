@@ -82,7 +82,7 @@ export const getStockfishMove = async (
   chessboard: Chess,
   time: number
 ): Promise<Move> => {
-  const response = await fetch("http://localhost:8000/stockfish", {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/stockfish`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
