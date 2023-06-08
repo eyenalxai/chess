@@ -4,6 +4,18 @@ import { Chess } from "chess.js"
 import { isDraw, isSomeoneWon } from "@/util"
 import { strategyList } from "@/util/strategy"
 
+const isStockfishStrategy = (strategy: Strategy) => {
+  return strategy.key.startsWith("stockfishMove")
+}
+
+const getDelay = (isAutoMode: boolean, strategy: Strategy) => {
+  if (strategy.key === "stockfishMove0.1") return 200
+
+  if (!isAutoMode || isStockfishStrategy(strategy)) return 0
+
+  return 300
+}
+
 export const useChessGame = () => {
   const [whiteStrategy, setWhiteStrategy] = useState<Strategy>(strategyList[0])
   const [blackStrategy, setBlackStrategy] = useState<Strategy>(strategyList[0])
@@ -22,6 +34,9 @@ export const useChessGame = () => {
     if (isSomeoneWon(chessboard) || isDraw(chessboard)) return
     if (!isAutoMode && chessboard.turn() === "w") return
 
+    const currentStrategy = chessboard.turn() === "w" ? whiteStrategy : blackStrategy
+    const delay = getDelay(isAutoMode, currentStrategy)
+
     const timer = setTimeout(async () => {
       try {
         const move = await moveFunction(chessboard)
@@ -31,7 +46,7 @@ export const useChessGame = () => {
         console.log(e)
         return
       }
-    }, 400)
+    }, delay)
 
     return () => clearTimeout(timer)
   }, [chessboard, moveFunction, isAutoMode])
