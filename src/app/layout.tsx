@@ -13,7 +13,12 @@ const darkTheme = createTheme({
 })
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      style={{
+        fontFamily: "monospace"
+      }}
+    >
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <body>{children}</body>
