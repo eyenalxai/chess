@@ -4,10 +4,11 @@ export const CustomAlert = ({ text }: { text: string }) => {
   return (
     <Alert
       sx={{
-        height: 40,
+        height: 30,
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        fontSize: 16
       }}
       variant="outlined"
       icon={false}

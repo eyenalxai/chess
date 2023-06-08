@@ -1,4 +1,5 @@
-import { Chess, Move } from "chess.js"
+import { Chess, Move, Square } from "chess.js"
+import { StockFishRequest, StockfishResponse } from "@/type"
 
 export const getRandomMove = (chessboard: Chess): Move => {
   const moves = chessboard.moves({ verbose: true })
@@ -75,4 +76,33 @@ export const getKamikazeMove = (chessboard: Chess): Move => {
   }
 
   return getCaptureMove(chessboard)
+}
+
+export const getStockfishMove = async (
+  chessboard: Chess,
+  time: number
+): Promise<Move> => {
+  const response = await fetch("http://localhost:8000/stockfish", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      fen_string: chessboard.fen(),
+      time: time
+    } as StockFishRequest)
+  })
+
+  if (!response.ok) {
+    return getRandomMove(chessboard)
+  }
+
+  const stockfishMove: StockfishResponse = await response.json()
+
+  const tempChessboard = new Chess(chessboard.fen())
+  return tempChessboard.move({
+    from: stockfishMove.from_square as Square,
+    to: stockfishMove.to_square as Square,
+    promotion: stockfishMove.promotion
+  })
 }

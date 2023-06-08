@@ -1,63 +1,71 @@
 "use client"
 
 import { Chessboard } from "react-chessboard"
-import { isDraw, isSomeoneWon, onPieceDrop } from "@/util"
+import { onPieceDrop } from "@/util"
 import { useChessGame } from "@/hook"
-import { useState } from "react"
-import { Strategy } from "@/type"
-import { strategyList } from "@/util/strategy"
-import {
-  Box,
-  Button,
-  Container,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select
-} from "@mui/material"
-import { Chess } from "chess.js"
-import { CustomAlert } from "@/component/custom-alert"
+import { Box, Container, FormControlLabel, FormGroup, Switch } from "@mui/material"
+import { StrategySelect } from "@/component/strategy-select"
+import { ChessboardReset } from "@/component/reset"
+import { GameStatus } from "@/component/game-status"
 
 export default function Home() {
-  const [strategy, setStrategy] = useState<Strategy>(strategyList[0])
-  const { chessboard, setChessboard } = useChessGame(strategy)
+  const {
+    chessboard,
+    setChessboard,
+    whiteStrategy,
+    setWhiteStrategy,
+    blackStrategy,
+    setBlackStrategy,
+    isAutoMode,
+    setIsAutoMode
+  } = useChessGame()
 
   return (
     <Container maxWidth="sm">
       <Box
         sx={{
           display: "flex",
-          gap: 2,
+          justifyContent: "left",
+          alignItems: "center",
+          gap: 1,
           marginY: 2
         }}
       >
-        <FormControl size="small">
-          <InputLabel id="strategy-select-label">STRATEGY</InputLabel>
-          <Select
-            labelId="strategy-select-label"
-            id="strategy-select"
-            value={strategy.key}
-            label="STRATEGY"
-            onChange={(e) =>
-              setStrategy(strategyList.find((s) => s.key === e.target.value)!)
-            }
+        <FormGroup>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1
+            }}
           >
-            {strategyList.map((strategy) => (
-              <MenuItem key={strategy.key} value={strategy.key}>
-                {strategy.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button onClick={() => setChessboard(new Chess())}>RESET</Button>
-        {isSomeoneWon(chessboard) && (
-          <CustomAlert text={`${chessboard.turn() === "w" ? "BLACK" : "WHITE"} WON`} />
-        )}
-        {isDraw(chessboard) && <CustomAlert text={`DRAW`} />}
+            <StrategySelect
+              strategy={blackStrategy}
+              setStrategy={setBlackStrategy}
+              color="black"
+            />
+            <StrategySelect
+              strategy={whiteStrategy}
+              setStrategy={setWhiteStrategy}
+              color="white"
+            />
+          </Box>
+        </FormGroup>
+        <ChessboardReset setChessboard={setChessboard} />
+        <FormControlLabel
+          control={
+            <Switch
+              size="small"
+              checked={isAutoMode}
+              onChange={() => setIsAutoMode(!isAutoMode)}
+            />
+          }
+          label={isAutoMode ? "AUTO" : "MANU"}
+        />
+        <GameStatus chessboard={chessboard} />
       </Box>
       <Chessboard
         position={chessboard.fen()}
-        showBoardNotation={false}
+        showBoardNotation={true}
         customDarkSquareStyle={{ backgroundColor: "#646464" }}
         customLightSquareStyle={{ backgroundColor: "#323232" }}
         onPieceDrop={(a, b) => onPieceDrop(a, b, chessboard, setChessboard)}
