@@ -9,11 +9,12 @@ const isStockfishStrategy = (strategy: Strategy) => {
 }
 
 const getDelay = (isAutoMode: boolean, strategy: Strategy) => {
-  if (strategy.key === "stockfishMove0.1") return 200
+  const isSpecificStockfishStrategy = strategy.key === "stockfishMove0.1"
+  const isAnyStockfishStrategy = isStockfishStrategy(strategy)
 
-  if (!isAutoMode || isStockfishStrategy(strategy)) return 0
-
-  return 300
+  return isSpecificStockfishStrategy || (!isAutoMode && !isAnyStockfishStrategy)
+    ? 300
+    : 0
 }
 
 export const useChessGame = () => {
