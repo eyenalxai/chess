@@ -1,9 +1,8 @@
 "use client"
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
+import { QueryClient, QueryClientProvider } from "react-query"
 
 const darkTheme = createTheme({
-  // Change primary color here to black
-
   palette: {
     mode: "dark",
     primary: {
@@ -11,6 +10,9 @@ const darkTheme = createTheme({
     }
   }
 })
+
+const queryClient = new QueryClient()
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -19,10 +21,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         fontFamily: "monospace"
       }}
     >
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <body>{children}</body>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
+          <body>{children}</body>
+        </ThemeProvider>
+      </QueryClientProvider>
     </html>
   )
 }
