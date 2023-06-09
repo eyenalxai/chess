@@ -23,8 +23,8 @@ export type StrategyRequest = {
   fen_string: string
   strategy_name: StrategyIdentifier
 }
-
-export type Winner = "white" | "black" | "draw"
+export type Player = "white" | "black"
+export type Winner = Player | "draw"
 
 export type Reason =
   | "checkmate"

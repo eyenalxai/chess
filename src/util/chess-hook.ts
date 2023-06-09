@@ -1,6 +1,6 @@
-import { GameOutcome, isChessMove, isGameOutcome } from "@/type"
+import { GameOutcome, isChessMove, isGameOutcome, Player } from "@/type"
 import { useEffect, useState } from "react"
-import { Chess } from "chess.js"
+import { Chess, Square } from "chess.js"
 import { useMutation } from "react-query"
 import { fetchMove } from "@/fetch"
 import { strategyList } from "@/util/strategy"
@@ -11,6 +11,24 @@ export const useChessGame = () => {
   const [whiteStrategy, setWhiteStrategy] = useState(strategyList[1])
   const [gameOutcome, setGameOutcome] = useState<GameOutcome | undefined>(undefined)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [player, setPlayer] = useState<Player | undefined>("white")
+
+  const onPieceDrop = (sourceSquare: Square, targetSquare: Square) => {
+    try {
+      const tempChessboard = new Chess(chessboard.fen())
+      tempChessboard.move({
+        from: sourceSquare,
+        to: targetSquare,
+        promotion: "q"
+      })
+      setChessboard(tempChessboard)
+      setIsPlaying(true)
+      return true
+    } catch (error) {
+      console.error(error)
+      return false
+    }
+  }
 
   const { reset, ...mutation } = useMutation(fetchMove, {
     onSuccess: (data, variables) => {
@@ -42,15 +60,16 @@ export const useChessGame = () => {
   }, [mutation, reset])
 
   useEffect(() => {
-    if (isPlaying && !gameOutcome) {
-      if (mutation.isIdle) {
+    if (isPlaying && !gameOutcome && mutation.isIdle) {
+      const currentTurn = chessboard.turn() === "w" ? "white" : "black"
+      if (player !== currentTurn) {
         const strategy = chessboard.turn() === "w" ? whiteStrategy : blackStrategy
         setTimeout(() => {
           mutation.mutate({ fen: chessboard.fen(), strategy: strategy })
         }, 200)
       }
     }
-  }, [chessboard, mutation, isPlaying, gameOutcome])
+  }, [chessboard, mutation, isPlaying, gameOutcome, player])
 
   return {
     chessboard,
@@ -62,6 +81,9 @@ export const useChessGame = () => {
     gameOutcome,
     setGameOutcome,
     isPlaying,
-    setIsPlaying
+    setIsPlaying,
+    player,
+    setPlayer,
+    onPieceDrop
   }
 }

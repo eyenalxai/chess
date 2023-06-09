@@ -17,7 +17,10 @@ export default function Home() {
     gameOutcome,
     setGameOutcome,
     isPlaying,
-    setIsPlaying
+    setIsPlaying,
+    player,
+    setPlayer,
+    onPieceDrop
   } = useChessGame()
 
   return (
@@ -34,7 +37,10 @@ export default function Home() {
         setIsPlaying={setIsPlaying}
       />
       <Chessboard
+        arePiecesDraggable={player !== undefined}
+        boardOrientation={player === "black" ? "black" : "white"}
         animationDuration={200}
+        onPieceDrop={(a, b) => onPieceDrop(a, b)}
         position={chessboard.fen()}
         showBoardNotation={false}
         customDarkSquareStyle={{ backgroundColor: "#646464" }}
@@ -49,6 +55,8 @@ export default function Home() {
         setChessboard={setChessboard}
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
+        player={player}
+        setPlayer={setPlayer}
       />
     </Container>
   )

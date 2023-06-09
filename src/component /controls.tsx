@@ -1,8 +1,9 @@
 import { Strategies } from "@/component /strategy-select"
 import { Box, Button } from "@mui/material"
-import { ChessStrategy } from "@/type"
+import { ChessStrategy, Player } from "@/type"
 import { Dispatch, SetStateAction } from "react"
 import { Chess } from "chess.js"
+import { PlayerSelect } from "@/component /player-select"
 
 type ControlsProps = {
   blackStrategy: ChessStrategy
@@ -13,6 +14,8 @@ type ControlsProps = {
   setChessboard: Dispatch<SetStateAction<Chess>>
   isPlaying: boolean
   setIsPlaying: Dispatch<SetStateAction<boolean>>
+  player: Player | undefined
+  setPlayer: Dispatch<SetStateAction<Player | undefined>>
 }
 
 export const Controls = ({
@@ -23,7 +26,9 @@ export const Controls = ({
   chessboard,
   setChessboard,
   isPlaying,
-  setIsPlaying
+  setIsPlaying,
+  player,
+  setPlayer
 }: ControlsProps) => {
   return (
     <Box
@@ -31,10 +36,11 @@ export const Controls = ({
         display: "flex",
         flexDirection: "column",
         alignItems: "left",
-        gap: 1,
+        gap: 2,
         marginY: 2
       }}
     >
+      <PlayerSelect player={player} setPlayer={setPlayer} />
       <Strategies
         blackStrategy={blackStrategy}
         setBlackStrategy={setBlackStrategy}
@@ -44,6 +50,7 @@ export const Controls = ({
         setChessboard={setChessboard}
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
+        player={player}
       />
       <Box
         sx={{

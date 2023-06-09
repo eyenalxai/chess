@@ -6,7 +6,7 @@ import {
   MenuItem,
   Select
 } from "@mui/material"
-import { ChessStrategy } from "@/type"
+import { ChessStrategy, Player } from "@/type"
 import { strategyList } from "@/util/strategy"
 import { Dispatch, SetStateAction } from "react"
 import { Chess } from "chess.js"
@@ -18,6 +18,7 @@ type StrategySelectProps = {
   setChessboard: Dispatch<SetStateAction<Chess>>
   isPlaying: boolean
   setIsPlaying: Dispatch<SetStateAction<boolean>>
+  player: Player | undefined
   color: "black" | "white"
 }
 
@@ -28,50 +29,55 @@ export const StrategySelect = ({
   setChessboard,
   isPlaying,
   setIsPlaying,
+  player,
   color
-}: StrategySelectProps) => (
-  <FormControl
-    size="small"
-    sx={{
-      minWidth: 150
-    }}
-  >
-    <InputLabel
+}: StrategySelectProps) => {
+  if (player === color) return null
+
+  return (
+    <FormControl
       size="small"
-      id={`${color}-strategy-select-label`}
-    >{`${color.toUpperCase()} STRATEGY`}</InputLabel>
-    <Select
-      size="small"
-      labelId={`${color}-strategy-select-label`}
-      id={`${color}-strategy-select`}
-      value={strategy.id}
-      label={`${color.toUpperCase()} STRATEGY`}
-      onChange={(e) => {
-        const selectedStrategy = strategyList.find((s) => s.id === e.target.value)
-        if (selectedStrategy) {
-          const wasPlaying = isPlaying
-          if (wasPlaying) {
-            setIsPlaying(false)
-          }
-          setStrategy(selectedStrategy)
-          const copyChessboard = new Chess(chessboard.fen())
-          setChessboard(copyChessboard)
-          if (wasPlaying) {
-            setTimeout(() => {
-              setIsPlaying(true)
-            }, 100)
-          }
-        }
+      sx={{
+        minWidth: 150
       }}
     >
-      {strategyList.map((strategyOption) => (
-        <MenuItem key={strategyOption.id} value={strategyOption.id}>
-          {strategyOption.displayName}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-)
+      <InputLabel
+        size="small"
+        id={`${color}-strategy-select-label`}
+      >{`${color.toUpperCase()} STRATEGY`}</InputLabel>
+      <Select
+        size="small"
+        labelId={`${color}-strategy-select-label`}
+        id={`${color}-strategy-select`}
+        value={strategy.id}
+        label={`${color.toUpperCase()} STRATEGY`}
+        onChange={(e) => {
+          const selectedStrategy = strategyList.find((s) => s.id === e.target.value)
+          if (selectedStrategy) {
+            const wasPlaying = isPlaying
+            if (wasPlaying) {
+              setIsPlaying(false)
+            }
+            setStrategy(selectedStrategy)
+            const copyChessboard = new Chess(chessboard.fen())
+            setChessboard(copyChessboard)
+            if (wasPlaying) {
+              setTimeout(() => {
+                setIsPlaying(true)
+              }, 100)
+            }
+          }
+        }}
+      >
+        {strategyList.map((strategyOption) => (
+          <MenuItem key={strategyOption.id} value={strategyOption.id}>
+            {strategyOption.displayName}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  )
+}
 
 type StrategiesProps = {
   blackStrategy: ChessStrategy
@@ -82,6 +88,7 @@ type StrategiesProps = {
   setChessboard: Dispatch<SetStateAction<Chess>>
   isPlaying: boolean
   setIsPlaying: Dispatch<SetStateAction<boolean>>
+  player: Player | undefined
 }
 
 export const Strategies = ({
@@ -92,7 +99,8 @@ export const Strategies = ({
   chessBoard,
   setChessboard,
   isPlaying,
-  setIsPlaying
+  setIsPlaying,
+  player
 }: StrategiesProps) => {
   return (
     <FormGroup>
@@ -109,6 +117,7 @@ export const Strategies = ({
           setChessboard={setChessboard}
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
+          player={player}
           color="black"
         />
         <StrategySelect
@@ -118,6 +127,7 @@ export const Strategies = ({
           setChessboard={setChessboard}
           isPlaying={isPlaying}
           setIsPlaying={setIsPlaying}
+          player={player}
           color="white"
         />
       </Box>
