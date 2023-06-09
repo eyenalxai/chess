@@ -26,7 +26,7 @@ export const useChessGame = () => {
     )
 
   const { reset, ...mutation } = useMutation(computeMove, {
-    onSuccess: (data, variables) => {
+    onSuccess: (data) => {
       if (isGameOutcome(data)) {
         setIsPlaying(false)
         setGameOutcome(data.game_outcome)
