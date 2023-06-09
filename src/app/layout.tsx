@@ -1,9 +1,19 @@
 import { Providers } from "@/app/providers"
 import { ReactNode } from "react"
+import { Metadata } from "next"
 
-export const metadata = {
-  title: "Chess",
-  description: "CHESS"
+export async function generateMetadata(): Promise<Metadata> {
+  const title = "Chess Showdown"
+  const description = "Where chess gets a bit wacky"
+
+  return {
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description
+    }
+  }
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
