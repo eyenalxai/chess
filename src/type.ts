@@ -3,6 +3,8 @@ export type StrategyMap = {
   pacifist: "PACIFIST"
   predator: "PREDATOR"
   kamikaze: "KAMIKAZE"
+  "same-color": "SAME COLOR"
+  "opposite-color": "OPPOSITE COLOR"
   pawnstorm: "PAWNSTORM"
   "stockfish-1": "STOCKFISH 1"
   "stockfish-10": "STOCKFISH 10"
