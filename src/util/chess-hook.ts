@@ -16,19 +16,21 @@ export const useChessGame = () => {
   const [targetMove, setTargetMove] = useState<{
     sourceSquare: Square
     targetSquare: Square
+    tempBoard: Chess
   } | null>(null)
 
   const onPieceDrop = (sourceSquare: Square, targetSquare: Square) => {
     const tempBoard = new Chess(chessboard.fen())
 
     try {
-      tempBoard.move({
+      chessboard.move({
         from: sourceSquare,
         to: targetSquare,
         promotion: "q"
       })
 
-      setTargetMove({ sourceSquare, targetSquare })
+      setChessboard(chessboard)
+      setTargetMove({ sourceSquare, targetSquare, tempBoard })
       return true
     } catch (error) {
       return false
@@ -40,19 +42,15 @@ export const useChessGame = () => {
       makeMove(
         targetMove.sourceSquare,
         targetMove.targetSquare,
-        chessboard,
+        targetMove.tempBoard,
         setChessboard,
         setIsPlaying,
         setGameOutcome,
         chessboard.turn() === "w" ? whiteStrategy : blackStrategy
       ).then((is_valid) => {
-        if (is_valid) {
-          chessboard.move({
-            from: targetMove.sourceSquare,
-            to: targetMove.targetSquare,
-            promotion: "q"
-          })
-          setChessboard(new Chess(chessboard.fen()))
+        if (!is_valid) {
+          chessboard.undo()
+          setChessboard(chessboard)
         }
       })
     }
