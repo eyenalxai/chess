@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from "react"
 export const players: Player[] = ["white", "black"]
 
 type PlayerSelectProps = {
-  player: Player | undefined
+  player: Player | "none"
   setPlayer: Dispatch<SetStateAction<Player | undefined>>
 }
 
@@ -31,9 +31,9 @@ export const PlayerSelect = ({ player, setPlayer }: PlayerSelectProps) => {
           setPlayer(selectedPlayer)
         }}
       >
-        {[...players, undefined].map((player) => (
+        {[...players, "none"].map((player) => (
           <MenuItem key={player} value={player}>
-            {player !== undefined ? player.toUpperCase() : "NONE"}
+            {player.toUpperCase()}
           </MenuItem>
         ))}
       </Select>

@@ -2,7 +2,7 @@ import { GameOutcome, isChessMove, isGameOutcome, Player } from "@/type"
 import { useEffect, useState } from "react"
 import { Chess, Square } from "chess.js"
 import { useMutation } from "react-query"
-import { fetchMove } from "@/fetch"
+import { computeMove } from "@/fetch"
 import { strategyList } from "@/util/strategy"
 import { makeMove } from "@/util/move"
 
@@ -12,12 +12,20 @@ export const useChessGame = () => {
   const [whiteStrategy, setWhiteStrategy] = useState(strategyList[1])
   const [gameOutcome, setGameOutcome] = useState<GameOutcome | undefined>(undefined)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [player, setPlayer] = useState<Player | undefined>(undefined)
+  const [player, setPlayer] = useState<Player | "none">("none")
 
   const onPieceDrop = (sourceSquare: Square, targetSquare: Square) =>
-    makeMove(sourceSquare, targetSquare, chessboard, setChessboard, setIsPlaying)
+    makeMove(
+      sourceSquare,
+      targetSquare,
+      chessboard,
+      setChessboard,
+      setIsPlaying,
+      setGameOutcome,
+      chessboard.turn() === "w" ? whiteStrategy : blackStrategy
+    )
 
-  const { reset, ...mutation } = useMutation(fetchMove, {
+  const { reset, ...mutation } = useMutation(computeMove, {
     onSuccess: (data, variables) => {
       if (isGameOutcome(data)) {
         setIsPlaying(false)
@@ -26,13 +34,12 @@ export const useChessGame = () => {
       }
 
       if (isChessMove(data)) {
-        const chess = new Chess(variables.fen)
-        chess.move({
+        chessboard.move({
           from: data.chess_move.from_square,
           to: data.chess_move.to_square,
           promotion: data.chess_move.promotion
         })
-        setChessboard(new Chess(chess.fen()))
+        setChessboard(new Chess(chessboard.fen()))
       }
     },
     onError: (error) => {
