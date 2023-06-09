@@ -6,7 +6,7 @@ export const players: Player[] = ["white", "black"]
 
 type PlayerSelectProps = {
   player: Player | "none"
-  setPlayer: Dispatch<SetStateAction<Player | undefined>>
+  setPlayer: Dispatch<SetStateAction<Player | "none">>
 }
 
 export const PlayerSelect = ({ player, setPlayer }: PlayerSelectProps) => {

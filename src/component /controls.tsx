@@ -14,8 +14,8 @@ type ControlsProps = {
   setChessboard: Dispatch<SetStateAction<Chess>>
   isPlaying: boolean
   setIsPlaying: Dispatch<SetStateAction<boolean>>
-  player: Player | undefined
-  setPlayer: Dispatch<SetStateAction<Player | undefined>>
+  player: Player | "none"
+  setPlayer: Dispatch<SetStateAction<Player | "none">>
 }
 
 export const Controls = ({

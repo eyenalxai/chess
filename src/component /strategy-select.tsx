@@ -18,7 +18,7 @@ type StrategySelectProps = {
   setChessboard: Dispatch<SetStateAction<Chess>>
   isPlaying: boolean
   setIsPlaying: Dispatch<SetStateAction<boolean>>
-  player: Player | undefined
+  player: Player | "none"
   color: "black" | "white"
 }
 
@@ -88,7 +88,7 @@ type StrategiesProps = {
   setChessboard: Dispatch<SetStateAction<Chess>>
   isPlaying: boolean
   setIsPlaying: Dispatch<SetStateAction<boolean>>
-  player: Player | undefined
+  player: Player | "none"
 }
 
 export const Strategies = ({
