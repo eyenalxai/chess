@@ -11,7 +11,7 @@ export const useChessGame = () => {
   const [whiteStrategy, setWhiteStrategy] = useState(strategyList[1])
   const [gameOutcome, setGameOutcome] = useState<GameOutcome | undefined>(undefined)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [player, setPlayer] = useState<Player | undefined>("white")
+  const [player, setPlayer] = useState<Player | undefined>(undefined)
 
   const onPieceDrop = (sourceSquare: Square, targetSquare: Square) => {
     try {

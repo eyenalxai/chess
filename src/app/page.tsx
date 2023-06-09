@@ -1,7 +1,7 @@
 "use client"
 
 import { Chessboard } from "react-chessboard"
-import { Container } from "@mui/material"
+import { Box, Container } from "@mui/material"
 import { EndgameDialog } from "@/component /endgame-dialog"
 import { Controls } from "@/component /controls"
 import { useChessGame } from "@/util/chess-hook"
@@ -36,28 +36,38 @@ export default function Home() {
         setChessboard={setChessboard}
         setIsPlaying={setIsPlaying}
       />
-      <Chessboard
-        arePiecesDraggable={player !== undefined}
-        boardOrientation={player === "black" ? "black" : "white"}
-        animationDuration={200}
-        onPieceDrop={(a, b) => onPieceDrop(a, b)}
-        position={chessboard.fen()}
-        showBoardNotation={false}
-        customDarkSquareStyle={{ backgroundColor: "#646464" }}
-        customLightSquareStyle={{ backgroundColor: "#323232" }}
-      />
-      <Controls
-        blackStrategy={blackStrategy}
-        setBlackStrategy={setBlackStrategy}
-        whiteStrategy={whiteStrategy}
-        setWhiteStrategy={setWhiteStrategy}
-        chessboard={chessboard}
-        setChessboard={setChessboard}
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
-        player={player}
-        setPlayer={setPlayer}
-      />
+      <Box
+        sx={{
+          width: "100%",
+          height: "auto",
+          maxWidth: "400px", // maximum size for desktop and iPad
+          margin: "0 auto" // center the board
+        }}
+      >
+        <Chessboard
+          arePiecesDraggable={player !== undefined}
+          boardOrientation={player === "black" ? "black" : "white"}
+          animationDuration={200}
+          onPieceDrop={(a, b) => onPieceDrop(a, b)}
+          position={chessboard.fen()}
+          showBoardNotation={false}
+          customDarkSquareStyle={{ backgroundColor: "#646464" }}
+          customLightSquareStyle={{ backgroundColor: "#323232" }}
+        />
+
+        <Controls
+          blackStrategy={blackStrategy}
+          setBlackStrategy={setBlackStrategy}
+          whiteStrategy={whiteStrategy}
+          setWhiteStrategy={setWhiteStrategy}
+          chessboard={chessboard}
+          setChessboard={setChessboard}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+          player={player}
+          setPlayer={setPlayer}
+        />
+      </Box>
     </Container>
   )
 }
