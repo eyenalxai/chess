@@ -4,6 +4,7 @@ import { Chess, Square } from "chess.js"
 import { useMutation } from "react-query"
 import { fetchMove } from "@/fetch"
 import { strategyList } from "@/util/strategy"
+import { makeMove } from "@/util/move"
 
 export const useChessGame = () => {
   const [chessboard, setChessboard] = useState(new Chess())
@@ -13,22 +14,8 @@ export const useChessGame = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [player, setPlayer] = useState<Player | undefined>(undefined)
 
-  const onPieceDrop = (sourceSquare: Square, targetSquare: Square) => {
-    try {
-      const tempChessboard = new Chess(chessboard.fen())
-      tempChessboard.move({
-        from: sourceSquare,
-        to: targetSquare,
-        promotion: "q"
-      })
-      setChessboard(tempChessboard)
-      setIsPlaying(true)
-      return true
-    } catch (error) {
-      console.error(error)
-      return false
-    }
-  }
+  const onPieceDrop = (sourceSquare: Square, targetSquare: Square) =>
+    makeMove(sourceSquare, targetSquare, chessboard, setChessboard, setIsPlaying)
 
   const { reset, ...mutation } = useMutation(fetchMove, {
     onSuccess: (data, variables) => {
