@@ -7,23 +7,54 @@ import { strategyList } from "@/util/strategy"
 import { makeMove } from "@/util/move"
 
 export const useChessGame = () => {
-  const [chessboard, setChessboard] = useState(new Chess())
   const [blackStrategy, setBlackStrategy] = useState(strategyList[0])
   const [whiteStrategy, setWhiteStrategy] = useState(strategyList[1])
   const [gameOutcome, setGameOutcome] = useState<GameOutcome | undefined>(undefined)
   const [isPlaying, setIsPlaying] = useState(false)
   const [player, setPlayer] = useState<Player | "none">("none")
+  const [chessboard, setChessboard] = useState(new Chess())
+  const [sourceSquare, setSourceSquare] = useState<Square | null>(null)
+  const [targetSquare, setTargetSquare] = useState<Square | null>(null)
 
-  const onPieceDrop = (sourceSquare: Square, targetSquare: Square) =>
-    makeMove(
-      sourceSquare,
-      targetSquare,
-      chessboard,
-      setChessboard,
-      setIsPlaying,
-      setGameOutcome,
-      chessboard.turn() === "w" ? whiteStrategy : blackStrategy
-    )
+  const onPieceDrop = (sourceSquare: Square, targetSquare: Square) => {
+    const tempBoard = new Chess(chessboard.fen())
+
+    try {
+      tempBoard.move({
+        from: sourceSquare,
+        to: targetSquare,
+        promotion: "q"
+      })
+      setSourceSquare(sourceSquare)
+      setTargetSquare(targetSquare)
+      return true
+    } catch (error) {
+      return false
+    }
+  }
+
+  useEffect(() => {
+    if (sourceSquare && targetSquare) {
+      makeMove(
+        sourceSquare,
+        targetSquare,
+        chessboard,
+        setChessboard,
+        setIsPlaying,
+        setGameOutcome,
+        chessboard.turn() === "w" ? whiteStrategy : blackStrategy
+      ).then((is_valid) => {
+        if (is_valid) {
+          chessboard.move({
+            from: sourceSquare,
+            to: targetSquare,
+            promotion: "q"
+          })
+          setChessboard(new Chess(chessboard.fen()))
+        }
+      })
+    }
+  }, [sourceSquare, targetSquare])
 
   const { reset, ...mutation } = useMutation(computeMove, {
     onSuccess: (data) => {

@@ -18,7 +18,7 @@ export const makeMove = async (
   setIsPlaying: Dispatch<SetStateAction<boolean>>,
   setGameOutcome: Dispatch<SetStateAction<GameOutcome | undefined>>,
   strategy: ChessStrategy
-) => {
+): Promise<boolean> => {
   try {
     const chessMove: ChessMove = {
       from_square: sourceSquare,
@@ -34,22 +34,19 @@ export const makeMove = async (
     const moveOutcome = await processMove(chessMove, strategyRequest)
 
     if (isGameOutcome(moveOutcome)) {
-      // The game is over
       setIsPlaying(false)
       setGameOutcome(moveOutcome.game_outcome)
-      return
+      return true
     }
 
     if (isChessMove(moveOutcome)) {
-      chessboard.move({
-        from: moveOutcome.chess_move.from_square,
-        to: moveOutcome.chess_move.to_square,
-        promotion: moveOutcome.chess_move.promotion
-      })
-      setChessboard(new Chess(chessboard.fen()))
       setIsPlaying(true)
+      return true
     }
   } catch (error) {
     console.error(error)
+    return false
   }
+
+  return false
 }
