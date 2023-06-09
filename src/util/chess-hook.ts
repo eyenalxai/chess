@@ -13,8 +13,10 @@ export const useChessGame = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [player, setPlayer] = useState<Player | "none">("none")
   const [chessboard, setChessboard] = useState(new Chess())
-  const [sourceSquare, setSourceSquare] = useState<Square | null>(null)
-  const [targetSquare, setTargetSquare] = useState<Square | null>(null)
+  const [targetMove, setTargetMove] = useState<{
+    sourceSquare: Square
+    targetSquare: Square
+  } | null>(null)
 
   const onPieceDrop = (sourceSquare: Square, targetSquare: Square) => {
     const tempBoard = new Chess(chessboard.fen())
@@ -25,8 +27,8 @@ export const useChessGame = () => {
         to: targetSquare,
         promotion: "q"
       })
-      setSourceSquare(sourceSquare)
-      setTargetSquare(targetSquare)
+
+      setTargetMove({ sourceSquare, targetSquare })
       return true
     } catch (error) {
       return false
@@ -34,10 +36,10 @@ export const useChessGame = () => {
   }
 
   useEffect(() => {
-    if (sourceSquare && targetSquare) {
+    if (targetMove) {
       makeMove(
-        sourceSquare,
-        targetSquare,
+        targetMove.sourceSquare,
+        targetMove.targetSquare,
         chessboard,
         setChessboard,
         setIsPlaying,
@@ -46,15 +48,15 @@ export const useChessGame = () => {
       ).then((is_valid) => {
         if (is_valid) {
           chessboard.move({
-            from: sourceSquare,
-            to: targetSquare,
+            from: targetMove.sourceSquare,
+            to: targetMove.targetSquare,
             promotion: "q"
           })
           setChessboard(new Chess(chessboard.fen()))
         }
       })
     }
-  }, [sourceSquare, targetSquare])
+  }, [targetMove])
 
   const { reset, ...mutation } = useMutation(computeMove, {
     onSuccess: (data) => {
