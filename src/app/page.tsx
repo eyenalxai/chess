@@ -45,7 +45,7 @@ export default function Home() {
         }}
       >
         <Chessboard
-          arePiecesDraggable={player !== undefined}
+          arePiecesDraggable={player !== "none"}
           boardOrientation={player === "black" ? "black" : "white"}
           animationDuration={200}
           onPieceDrop={(a, b) => onPieceDrop(a, b)}
