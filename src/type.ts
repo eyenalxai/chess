@@ -3,6 +3,7 @@ export type StrategyMap = {
   pacifist: "PACIFIST"
   predator: "PREDATOR"
   kamikaze: "KAMIKAZE"
+  fortify: "FORTIFY"
   chroma: "CHROMA"
   contrast: "CONTRAST"
   pawnstorm: "PAWNSTORM"
