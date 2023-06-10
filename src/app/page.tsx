@@ -1,10 +1,11 @@
 "use client"
 
 import { Chessboard } from "react-chessboard"
-import { Box, Container } from "@mui/material"
+import { Box, Container, LinearProgress } from "@mui/material"
 import { EndgameDialog } from "@/component /endgame-dialog"
 import { Controls } from "@/component /controls"
 import { useChessGame } from "@/util/chess-hook"
+import { calculateScore } from "@/util/score"
 
 export default function Home() {
   const {
@@ -53,6 +54,13 @@ export default function Home() {
           showBoardNotation={false}
           customDarkSquareStyle={{ backgroundColor: "#646464" }}
           customLightSquareStyle={{ backgroundColor: "#323232" }}
+        />
+        <LinearProgress
+          sx={{
+            marginTop: 2
+          }}
+          variant="determinate"
+          value={calculateScore(chessboard)}
         />
 
         <Controls
