@@ -7,7 +7,7 @@ export const calculateScore = (chessboard: Chess) => {
     b: 3,
     r: 5,
     q: 9,
-    k: 1
+    k: 100
   }
 
   const pieceCounts = chessboard.board().reduce(

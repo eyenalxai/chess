@@ -2,13 +2,8 @@ import { ChessStrategy } from "@/type"
 
 export const strategyList: ChessStrategy[] = [
   { id: "random", displayName: "RANDOM" },
-  { id: "pacifist", displayName: "PACIFIST" },
-  { id: "pawnstorm", displayName: "PAWNSTORM" },
-  { id: "predator", displayName: "PREDATOR" },
-  { id: "kamikaze", displayName: "KAMIKAZE" },
-  { id: "fortify", displayName: "FORTIFY" },
-  { id: "chroma", displayName: "CHROMA" },
-  { id: "contrast", displayName: "CONTRAST" },
+  { id: "sidestep", displayName: "SIDESTEP" },
+  { id: "snatcher", displayName: "SNATCHER" },
   { id: "stockfish-1", displayName: "STOCKFISH 1" },
   { id: "stockfish-10", displayName: "STOCKFISH 10" },
   { id: "stockfish-100", displayName: "STOCKFISH 100" },

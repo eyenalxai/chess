@@ -24,8 +24,7 @@ export const useChessGame = () => {
     if (movesWithoutCapture >= 50) {
       setGameOutcome({
         winner: "draw",
-        reason: "fifty_moves",
-        ended: true
+        reason: "fifty_moves"
       })
     }
   }, [movesWithoutCapture])

@@ -1,12 +1,7 @@
 export type StrategyMap = {
   random: "RANDOM"
-  pacifist: "PACIFIST"
-  predator: "PREDATOR"
-  kamikaze: "KAMIKAZE"
-  fortify: "FORTIFY"
-  chroma: "CHROMA"
-  contrast: "CONTRAST"
-  pawnstorm: "PAWNSTORM"
+  sidestep: "SIDESTEP"
+  snatcher: "SNATCHER"
   "stockfish-1": "STOCKFISH 1"
   "stockfish-10": "STOCKFISH 10"
   "stockfish-100": "STOCKFISH 100"
@@ -50,7 +45,6 @@ export type ChessMove = {
 export type GameOutcome = {
   winner: Winner
   reason: Reason
-  ended: boolean
 }
 
 export type MoveOutcome =
