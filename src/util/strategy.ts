@@ -4,6 +4,8 @@ export const strategyList: ChessStrategy[] = [
   { id: "random", displayName: "RANDOM" },
   { id: "sidestep", displayName: "SIDESTEP" },
   { id: "snatcher", displayName: "SNATCHER" },
+  { id: "chroma", displayName: "CHROMA" },
+  { id: "contrast", displayName: "CONTRAST" },
   { id: "stockfish-1", displayName: "STOCKFISH 1" },
   { id: "stockfish-10", displayName: "STOCKFISH 10" },
   { id: "stockfish-100", displayName: "STOCKFISH 100" },
