@@ -16,6 +16,7 @@ type ControlsProps = {
   setIsPlaying: Dispatch<SetStateAction<boolean>>
   player: Player | "none"
   setPlayer: Dispatch<SetStateAction<Player | "none">>
+  setMovesWithoutCapture: Dispatch<SetStateAction<number>>
 }
 
 export const Controls = ({
@@ -28,7 +29,8 @@ export const Controls = ({
   isPlaying,
   setIsPlaying,
   player,
-  setPlayer
+  setPlayer,
+  setMovesWithoutCapture
 }: ControlsProps) => {
   return (
     <Box
@@ -76,6 +78,7 @@ export const Controls = ({
             setIsPlaying(false)
             setTimeout(() => {
               setChessboard(new Chess())
+              setMovesWithoutCapture(0)
             }, 300)
           }}
         >

@@ -8,19 +8,21 @@ type EndgameDialogProps = {
   setGameOutcome: Dispatch<SetStateAction<GameOutcome | undefined>>
   setChessboard: Dispatch<SetStateAction<Chess>>
   setIsPlaying: Dispatch<SetStateAction<boolean>>
+  setMovesWithoutCapture: Dispatch<SetStateAction<number>>
 }
 
 export const EndgameDialog = ({
   gameOutcome,
   setGameOutcome,
   setChessboard,
-  setIsPlaying
+  setIsPlaying,
+  setMovesWithoutCapture
 }: EndgameDialogProps) => {
   const handleRestart = () => {
     setChessboard(new Chess())
     setIsPlaying(false)
-
     setGameOutcome(undefined)
+    setMovesWithoutCapture(0)
   }
 
   return (

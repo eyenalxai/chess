@@ -1,6 +1,6 @@
 import { GameOutcome, isChessMove, isGameOutcome, Player } from "@/type"
 import { useEffect, useState } from "react"
-import { Chess, Square } from "chess.js"
+import { Chess, Move, Square } from "chess.js"
 import { useMutation } from "react-query"
 import { computeMove } from "@/fetch"
 import { strategyList } from "@/util/strategy"
@@ -13,21 +13,44 @@ export const useChessGame = () => {
   const [isPlaying, setIsPlaying] = useState(false)
   const [player, setPlayer] = useState<Player | "none">("none")
   const [chessboard, setChessboard] = useState(new Chess())
+  const [movesWithoutCapture, setMovesWithoutCapture] = useState(0)
   const [targetMove, setTargetMove] = useState<{
     sourceSquare: Square
     targetSquare: Square
     tempBoard: Chess
   } | null>(null)
 
+  useEffect(() => {
+    if (movesWithoutCapture >= 50) {
+      setGameOutcome({
+        winner: "draw",
+        reason: "fifty_moves",
+        ended: true
+      })
+    }
+  }, [movesWithoutCapture])
+
+  const trackMovesWithoutCapture = (move: Move) => {
+    if (!move.flags.includes("c")) {
+      setMovesWithoutCapture(movesWithoutCapture + 1)
+    }
+
+    if (move.flags.includes("c")) {
+      setMovesWithoutCapture(0)
+    }
+  }
+
   const onPieceDrop = (sourceSquare: Square, targetSquare: Square) => {
     const tempBoard = new Chess(chessboard.fen())
 
     try {
-      chessboard.move({
+      const move = chessboard.move({
         from: sourceSquare,
         to: targetSquare,
         promotion: "q"
       })
+
+      trackMovesWithoutCapture(move)
 
       setChessboard(chessboard)
       setTargetMove({ sourceSquare, targetSquare, tempBoard })
@@ -65,11 +88,14 @@ export const useChessGame = () => {
       }
 
       if (isChessMove(data)) {
-        chessboard.move({
+        const move = chessboard.move({
           from: data.chess_move.from_square,
           to: data.chess_move.to_square,
           promotion: data.chess_move.promotion
         })
+
+        trackMovesWithoutCapture(move)
+
         setChessboard(new Chess(chessboard.fen()))
       }
     },
@@ -109,6 +135,7 @@ export const useChessGame = () => {
     setIsPlaying,
     player,
     setPlayer,
+    setMovesWithoutCapture,
     onPieceDrop
   }
 }

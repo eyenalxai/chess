@@ -21,6 +21,7 @@ export default function Home() {
     setIsPlaying,
     player,
     setPlayer,
+    setMovesWithoutCapture,
     onPieceDrop
   } = useChessGame()
 
@@ -36,6 +37,7 @@ export default function Home() {
         setGameOutcome={setGameOutcome}
         setChessboard={setChessboard}
         setIsPlaying={setIsPlaying}
+        setMovesWithoutCapture={setMovesWithoutCapture}
       />
       <Box
         sx={{
@@ -74,6 +76,7 @@ export default function Home() {
           setIsPlaying={setIsPlaying}
           player={player}
           setPlayer={setPlayer}
+          setMovesWithoutCapture={setMovesWithoutCapture}
         />
       </Box>
     </Container>
