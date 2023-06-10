@@ -8,8 +8,6 @@ export const strategyList: ChessStrategy[] = [
   { id: "kamikaze", displayName: "KAMIKAZE" },
   { id: "chroma", displayName: "CHROMA" },
   { id: "contrast", displayName: "CONTRAST" },
-  { id: "mirror", displayName: "MIRROR" },
-  { id: "fortify", displayName: "FORTIFY" },
   { id: "stockfish-1", displayName: "STOCKFISH 1" },
   { id: "stockfish-10", displayName: "STOCKFISH 10" },
   { id: "stockfish-100", displayName: "STOCKFISH 100" },

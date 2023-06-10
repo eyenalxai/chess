@@ -6,8 +6,6 @@ export type StrategyMap = {
   chroma: "CHROMA"
   contrast: "CONTRAST"
   pawnstorm: "PAWNSTORM"
-  mirror: "MIRROR"
-  fortify: "FORTIFY"
   "stockfish-1": "STOCKFISH 1"
   "stockfish-10": "STOCKFISH 10"
   "stockfish-100": "STOCKFISH 100"
