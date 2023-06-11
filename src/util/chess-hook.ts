@@ -8,7 +8,7 @@ import { makeMove } from "@/util/move"
 
 export const useChessGame = () => {
   const [blackStrategy, setBlackStrategy] = useState(strategyList[0])
-  const [whiteStrategy, setWhiteStrategy] = useState(strategyList[1])
+  const [whiteStrategy, setWhiteStrategy] = useState(strategyList[0])
   const [gameOutcome, setGameOutcome] = useState<GameOutcome | undefined>(undefined)
   const [isPlaying, setIsPlaying] = useState(false)
   const [player, setPlayer] = useState<Player | "none">("none")
