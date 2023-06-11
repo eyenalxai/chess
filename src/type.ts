@@ -5,6 +5,7 @@ export type StrategyMap = {
   monochrome: "MONOCHROME"
   dichrome: "DICHROME"
   "checkmate-express": "CHECKMATE EXPRESS"
+  "random-strategy": "RANDOM STRATEGY"
   "stockfish-1": "STOCKFISH 1"
   "stockfish-10": "STOCKFISH 10"
   "stockfish-100": "STOCKFISH 100"

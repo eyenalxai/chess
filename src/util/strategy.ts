@@ -7,6 +7,7 @@ export const strategyList: ChessStrategy[] = [
   { id: "monochrome", displayName: "MONOCHROME" },
   { id: "dichrome", displayName: "DICHROME" },
   { id: "checkmate-express", displayName: "CHECKMATE EXPRESS" },
+  { id: "random-strategy", displayName: "RANDOM STRATEGY" },
   { id: "stockfish-1", displayName: "STOCKFISH 1" },
   { id: "stockfish-10", displayName: "STOCKFISH 10" },
   { id: "stockfish-100", displayName: "STOCKFISH 100" },
