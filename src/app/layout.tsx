@@ -3,8 +3,9 @@ import { ReactNode } from "react"
 import { Metadata } from "next"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = "Chess Showdown"
-  const description = "Where chess gets a bit wacky"
+  const title = "The Great Chess Rumble"
+  const description =
+    "In the chaos of this landscape, chess twists into an uncanny, peculiar jest"
 
   return {
     title: title,
