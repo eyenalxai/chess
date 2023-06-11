@@ -41,6 +41,7 @@ export type Reason =
 export type ChessMove = {
   from_square: string
   to_square: string
+  uci: string
   promotion?: string
 }
 
