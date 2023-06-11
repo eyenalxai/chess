@@ -23,7 +23,6 @@ export const makeMove = async (
     const chessMove: ChessMove = {
       from_square: sourceSquare,
       to_square: targetSquare,
-      uci: `${sourceSquare}${targetSquare}q`,
       promotion: "q"
     }
 
