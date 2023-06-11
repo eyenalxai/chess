@@ -1,7 +1,7 @@
 export type StrategyMap = {
   random: "RANDOM"
-  sidestep: "SIDESTEP"
-  snatcher: "SNATCHER"
+  dodger: "DODGER"
+  punisher: "PUNISHER"
   chroma: "CHROMA"
   contrast: "CONTRAST"
   "stockfish-1": "STOCKFISH 1"
