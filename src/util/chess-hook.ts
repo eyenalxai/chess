@@ -76,6 +76,7 @@ export const useChessGame = () => {
         }
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetMove])
 
   const { reset, ...mutation } = useMutation(computeMove, {
@@ -119,6 +120,7 @@ export const useChessGame = () => {
         }, 200)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chessboard, mutation, isPlaying, gameOutcome, player])
 
   return {
