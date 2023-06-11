@@ -1,11 +1,11 @@
 import { ChessStrategy } from "@/type"
 
 export const strategyList: ChessStrategy[] = [
-  { id: "random", displayName: "RANDOM" },
-  { id: "dodger", displayName: "DODGER" },
-  { id: "punisher", displayName: "PUNISHER" },
-  { id: "chroma", displayName: "CHROMA" },
-  { id: "contrast", displayName: "CONTRAST" },
+  { id: "random-move", displayName: "RANDOM MOVE" },
+  { id: "elusive", displayName: "ELUSIVE" },
+  { id: "predator", displayName: "PREDATOR" },
+  { id: "monochrome", displayName: "MONOCHROME" },
+  { id: "dichrome", displayName: "DICHROME" },
   { id: "checkmate-express", displayName: "CHECKMATE EXPRESS" },
   { id: "stockfish-1", displayName: "STOCKFISH 1" },
   { id: "stockfish-10", displayName: "STOCKFISH 10" },
