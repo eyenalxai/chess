@@ -4,7 +4,7 @@ export type StrategyMap = {
   punisher: "PUNISHER"
   chroma: "CHROMA"
   contrast: "CONTRAST"
-  kamikaze: "KAMIKAZE"
+  "checkmate-express": "CHECKMATE EXPRESS"
   "stockfish-1": "STOCKFISH 1"
   "stockfish-10": "STOCKFISH 10"
   "stockfish-100": "STOCKFISH 100"
